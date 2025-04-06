@@ -1,52 +1,46 @@
 #include <event_handler.hpp>
 
-EventHandler::EventHandler () {
-	eventF_k = new SDL_EventType[16];
-	eventF_v = new std::function<void(SDL_Event*)>[16];
-	eventF_c = 0;
-	// mapEventF = std::map<SDL_EventType, EventF>(0, 16);
-}
-
-EventHandler::~EventHandler() {
-	delete[] eventF_k;
-	delete[] eventF_v;
-}
-
-int EventHandler::eventF_get(SDL_EventType type) {
-	for (int i = 0; i < eventF_c; i++) {
-		if (eventF_k[i] == type) {
+int32_t EventHandler::findEvent(EventType type) {
+	for (int32_t i = 0; i < linkedEvents_k.size(); i++) {
+		if (linkedEvents_k.at(i) == type)
 			return i;
-		}
 	}
 
 	return -1;
 }
 
-void EventHandler::linkEvent (SDL_EventType type, std::function<void(SDL_Event*)> eventf) {
-	// mapEventF.insert(type);
-	// mapEventF.at(type) = eventf;
-	eventF_k[eventF_c] = type;
-	eventF_v[eventF_c] = eventf;
-	eventF_c++;
+EventHandler::EventHandler () {
+	// linkedEvents = std::map(SDL_EVENT_FIRST, SDL_EVENT_LAST);
+	linkedEvents_c = 0;
 }
 
-void EventHandler::unlinkEvent (SDL_EventType type) {
-	// mapEventF.erase(type);
+void EventHandler::linkEvent (EventType type, EventFunc func) {
+	linkedEvents_k.at(linkedEvents_c) = type;
+	linkedEvents_v.at(linkedEvents_c) = func;
+	linkedEvents_c++;
+}
+
+void EventHandler::unlinkEvent (EventType type) {
+	// int32_t eventIdx = findEvent(type);
+	// linkedEvents_k.erase(linkedEvents_k.begin() + eventIdx);
+	// linkedEvents_v.erase(linkedEvents_v.begin() + eventIdx);
 	return;
 }
 
 void EventHandler::processEvents () {
 	while (pollEvent()) {
-		// mapEventF.at((SDL_EventType)event.type)(&event);
-		int eventfIdx = eventF_get((SDL_EventType)event.type);
+		int32_t eventIdx = findEvent((EventType)event.type);
 
-		if (eventfIdx == -1) {
+		// I tried using std::map, std::unordered_map, std::vector,
+		// std::array, a basic C array just to find out I forgot to put this
+		// here.
+		// Thank you, C++.
+		// And actually thank you a basic C array for letting me know it's
+		// not actually std::out_of_bounds but rather std::bad_function_call.
+		if (eventIdx == -1)
 			continue;
-		}
 
-		std::function<void(SDL_Event*)> eventf = eventF_v[eventfIdx];
-
-		eventf(&event);
+		linkedEvents_v.at(eventIdx)(&event);
 	}
 }
 
