@@ -1,7 +1,7 @@
-#include "../include/render_handler.hpp"
+#include <render_handler.hpp>
 
 RenderHandler::RenderHandler() {
-    SDL_CreateWindowAndRenderer("window", 800, 600, SDL_WINDOW_MINIMIZED, &window, &renderer);
+    SDL_CreateWindowAndRenderer("SandSim", 800, 600, SDL_WINDOW_MAXIMIZE | SDL_WINDOW_RESIZABLE, &window, &renderer);
 }
 
 RenderHandler::~RenderHandler() {

@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE include)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/include)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)

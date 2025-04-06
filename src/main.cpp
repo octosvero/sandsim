@@ -1,4 +1,4 @@
-#include "../include/game_handler.hpp"
+#include <game_handler.hpp>
 
 int main() {
     GameHandler gameHandler = {};
