@@ -12,7 +12,9 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/include)
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     # Win64
     target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/lib/win64)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL3)
 else()
     # Win32
-    target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/lib/win32)
+	target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/lib/win32)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SDL3)
 endif()
