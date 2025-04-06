@@ -2,18 +2,22 @@
 
 GameHandler::GameHandler() : running(true) {
     renderHandler = new RenderHandler();
+    eventHandler = new EventHandler();
 }
 
 GameHandler::~GameHandler() {
     delete renderHandler;
+    delete eventHandler;
 }
 
 void GameHandler::beginLoop() {
+    SDL_Event* event = eventHandler->getEvent();
+
     while (running) {
-        while (SDL_PollEvent(&event)) {
+        while (eventHandler->pollEvent()) {
             // Event handling goes here (probably, we'll figure it out)
 
-            if (event.type == SDL_EVENT_QUIT)
+            if (event->type == SDL_EVENT_QUIT)
                 running = false;
         }
 
