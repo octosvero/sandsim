@@ -3,13 +3,18 @@
 
 #include <render_handler.hpp>
 #include <event_handler.hpp>
+#include <cells/cell_chunk.hpp>
 
 class GameHandler {
 private:
     RenderHandler* renderHandler;
     EventHandler* eventHandler;
 
+    CellChunk* cellChunk;
+    uint32_t cellChunk_timemod;
+
     bool running;
+    uint64_t time;
 
 public:
     GameHandler();

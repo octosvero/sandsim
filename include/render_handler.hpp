@@ -10,6 +10,8 @@ public:
     RenderHandler();
     ~RenderHandler();
 
+    SDL_Renderer* getRenderer();
+
     // GameHandler will call preRender() after handling events
     void preRender();
     // Render functions for all entities will be called before the GameHandler calls postRender()

@@ -9,6 +9,10 @@ RenderHandler::~RenderHandler() {
     SDL_DestroyWindow(window);
 }
 
+SDL_Renderer* RenderHandler::getRenderer() {
+	return renderer;
+}
+
 void RenderHandler::preRender() {
     SDL_SetRenderDrawColorFloat(renderer, 0.f, 0.f, 0.f, 1.f);
     SDL_RenderClear(renderer);
