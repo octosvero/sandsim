@@ -3,6 +3,8 @@
 GameHandler::GameHandler() : running(true) {
     renderHandler = new RenderHandler();
     eventHandler = new EventHandler();
+
+    eventHandler->linkEvent(SDL_EVENT_QUIT, [&](SDL_Event* event) {onQuit(event);});
 }
 
 GameHandler::~GameHandler() {
@@ -11,15 +13,9 @@ GameHandler::~GameHandler() {
 }
 
 void GameHandler::beginLoop() {
-    SDL_Event* event = eventHandler->getEvent();
-
     while (running) {
-        while (eventHandler->pollEvent()) {
-            // Event handling goes here (probably, we'll figure it out)
-
-            if (event->type == SDL_EVENT_QUIT)
-                running = false;
-        }
+        // Process Events
+        eventHandler->processEvents();
 
         renderHandler->preRender();
 
@@ -27,4 +23,8 @@ void GameHandler::beginLoop() {
 
         renderHandler->postRender();
     }
+}
+
+void GameHandler::onQuit(SDL_Event* event) {
+    running = false;
 }

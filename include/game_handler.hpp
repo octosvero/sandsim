@@ -16,6 +16,8 @@ public:
     ~GameHandler();
 
     void beginLoop();
+
+    void onQuit(SDL_Event* event);
 };
 
 #endif
