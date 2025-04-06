@@ -1,3 +1,5 @@
+.vscode/
+build/
 # CMake files
 CMakeFiles
 cmake_install.cmake
